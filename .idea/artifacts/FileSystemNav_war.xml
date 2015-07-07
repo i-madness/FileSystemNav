@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="FileSystemNav:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="FileSystemNav.war">
+      <element id="artifact" artifact-name="FileSystemNav:war exploded" />
+    </root>
+  </artifact>
+</component>
