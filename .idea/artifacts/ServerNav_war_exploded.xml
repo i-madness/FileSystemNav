@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" build-on-make="true" name="FileSystemNav:war exploded">
-    <output-path>$PROJECT_DIR$/target/FileSystemNav</output-path>
+  <artifact type="exploded-war" build-on-make="true" name="ServerNav:war exploded">
+    <output-path>$PROJECT_DIR$/target/ServerNav</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="FileSystemNav" />
+          <element id="module-output" name="ServerNav" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.1.1.RELEASE" />
@@ -15,7 +15,6 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
-          <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.20" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.2.2" />
@@ -24,9 +23,9 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="C:\Users\Валерий\Desktop\FileSystemNav\target/MANIFEST.MF" />
+        <element id="file-copy" path="C:\Users\Валерий\Desktop\ServerNav\target/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="FileSystemNav/web/Web" />
+      <element id="javaee-facet-resources" facet="ServerNav/web/Web" />
     </root>
   </artifact>
 </component>

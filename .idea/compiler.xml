@@ -22,11 +22,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="FileSystemNav" />
+        <module name="ServerNav" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="FileSystemNav" target="1.6" />
+      <module name="ServerNav" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
