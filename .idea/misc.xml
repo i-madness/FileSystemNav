@@ -6,20 +6,13 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
-  <component name="IdProvider" IDEtalkID="FA02BEBA72158E82484FC9FF6DC5DB89" />
+  <component name="IdProvider" IDEtalkID="3A3C42661E4C7962217918EC0C3220B7" />
   <component name="IvyIDEA.ProjectSettings">
     <option name="artifactTypeSettings">
       <ArtifactTypeSettings />
     </option>
     <option name="propertiesSettings">
       <PropertiesSettings />
-    </option>
-  </component>
-  <component name="MavenProjectsManager">
-    <option name="originalFiles">
-      <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
-      </list>
     </option>
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">

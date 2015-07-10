@@ -1,5 +1,6 @@
 package controllers;
 
+import app.Wat;
 import models.Directory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,18 +15,24 @@ import service.DirectoryService;
 @RequestMapping("/")
 @EnableWebMvc
 public class DirectoryController {
+
 	@RequestMapping("/")
 	public String printWelcome(@RequestParam(required = false) String str, ModelMap model) {
-		model.addAttribute("garrr", str);
-		return "hello";
+		//model.addAttribute("smth", str);
+		return "index";
 	}
+
 	@RequestMapping("/dir/{path}")
 	@ResponseBody
 	public Directory showDir(@PathVariable String path) {
 		return DirectoryService.getDirectoryByPath(path);
 	}
-	/*@RequestMapping("/nav")
-	public String showDir(@RequestParam(value = "name", required = false) String name) {
-		return "index";
-	}*/
+
+	// test controller for .doc files view
+	@RequestMapping("/docx")
+	public String outputDocx(ModelMap model) {
+		Wat wat = new Wat("C:/Users/Валерий/Desktop/Курсовая - блог-хостинг.docx");
+		model.addAttribute("content",wat.contentList);
+		return "docx";
+	}
 }

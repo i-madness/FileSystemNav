@@ -23,7 +23,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="C:\Users\Валерий\Desktop\ServerNav\target/MANIFEST.MF" />
+        <element id="file-copy" path="C:\Users\Валерий\Desktop\FileSystemNav\target/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="ServerNav/web/Web" />
     </root>
