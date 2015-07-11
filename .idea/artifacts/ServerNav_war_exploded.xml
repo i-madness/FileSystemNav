@@ -15,15 +15,55 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.2.2" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.2.2" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.2.2" />
+          <element id="library" level="project" name="Maven: org.docx4j:docx4j:3.0.0" />
+          <element id="library" level="project" name="Maven: org.plutext:jaxb-svg11:1.0.2" />
+          <element id="library" level="project" name="Maven: org.plutext:jaxb-xslfo:1.0.1" />
+          <element id="library" level="project" name="Maven: org.plutext:jaxb-xmldsig-core:1.0.0" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.5" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.7.5" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.4" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.3" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:1.3.1" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:xmlgraphics-commons:1.5" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:fop:1.1" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-svg-dom:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-anim:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-css:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-dom:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-parser:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-util:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-bridge:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-script:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-js:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-xml:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-awt-util:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-gvt:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-transcoder:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-svggen:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-extension:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-ext:1.7" />
+          <element id="library" level="project" name="Maven: org.apache.avalon.framework:avalon-framework-api:4.3.1" />
+          <element id="library" level="project" name="Maven: org.apache.avalon.framework:avalon-framework-impl:4.3.1" />
+          <element id="library" level="project" name="Maven: xalan:xalan:2.7.1" />
+          <element id="library" level="project" name="Maven: xalan:serializer:2.7.1" />
+          <element id="library" level="project" name="Maven: net.arnx:wmf2svg:0.9.0" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi-scratchpad:3.8" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi:3.8" />
+          <element id="library" level="project" name="Maven: org.antlr:antlr-runtime:3.3" />
+          <element id="library" level="project" name="Maven: org.antlr:stringtemplate:3.2.1" />
+          <element id="library" level="project" name="Maven: antlr:antlr:2.7.7" />
+          <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.20" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="C:\Users\Валерий\Desktop\FileSystemNav\target/MANIFEST.MF" />
+        <element id="file-copy" path="C:\Users\Валерий\Desktop\ServerNav\target/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="ServerNav/web/Web" />
     </root>
