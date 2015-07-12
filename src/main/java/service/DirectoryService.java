@@ -38,7 +38,8 @@ public class DirectoryService {
                     else {
                         if (!preferences.getShowHiddenFiles() && !f.isHidden())
                             files.add(f.getName());
-                        else files.add(f.getName());
+                        else if (preferences.getShowHiddenFiles() && f.isHidden())
+                            files.add(f.getName());
                     }
                 }
             Directory directory = new Directory(subdirs, files, correctPath, pathDir.getName(), parent);

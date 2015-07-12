@@ -30,74 +30,49 @@
 
 	<div class="container col-md-8 col-md-offset-2">
 		<form id="idForm">
-			<label for="pathInput">Путь к папке: </label><input name="id" id="pathInput" value="C:/" type="text" style="width: 30%; padding: 6px; margin: 15px" />
+			<label for="pathInput">Путь к папке: </label><input name="id" id="pathInput" value="${initialDirectory}" type="text" style="width: 30%; padding: 6px; margin: 15px" />
 			<input class="btn btn-primary" type="submit" value="Вывести папку" /> <br />
 			<div>Текущая папка: <span id="folderResponse">C:/</span></div>
-			<div><span class="glyphicon glyphicon-arrow-up"></span><span id="parentUp" style="margin-left: 6px"></span></div>
+			<div><span class="glyphicon glyphicon-arrow-up"></span><span id="parentUp"></span></div>
 		</form>
 
-	<table id="folder-view" class="table table-bordered table-hover">
+		<table id="folder-view" class="table table-bordered table-hover">
 		</table>
 	</div><!-- /.container -->
 
 
 	<script type="text/javascript">
+		// global variables
+		var currentDir='${initialDirectory}';
+
+		$('body').on('click','.folderLink', function() {
+			currentDir = $(this).children('.tdName').text();
+			$('#pathInput').val($('#pathInput').val()+currentDir+'/')
+			$('#idForm').submit();
+		});
+
 		$('#idForm').submit(function(e) {
-			var pathToDir = $('#pathInput').val();
-			$.get('/dir/' + pathToDir.split("/").join("-_-"), function(directory) {
+			currentDir = $('#pathInput').val();
+			$.get('/dir/' + currentDir.split("/").join("-_-"), function(directory) {
 				$('#folderResponse').text(directory.name);
-				$('#parentUp').text(directory.parent);
+				$('#parentUp').text(directory.parent==null ? '(корневая директория)' : directory.parent);
 				$('#folder-view').empty();
 				$('#folder-view').append('<thead><td>/</td><td>Имя</td><td>Тип</td></thead>')
-				for (var i = 0; i < directory.files.length; i++) {
-					$('#folder-view').append('<tr><td><span class="glyphicon glyphicon-file"></span></td><td>' + directory.files[i] + '</td><td>Файл</td>')
+				if (directory.files!==undefined) {
+					for (var i = 0; i < directory.files.length; i++) {
+						$('#folder-view').append('<tr><td align="center"><span class="glyphicon glyphicon-file"></span></td><td>' + directory.files[i] + '</td><td align="center">Файл</td>')
+					}
 				}
-				for (var i = 0; i < directory.subdirectories.length; i++) {
-					$('#folder-view').append('<tr><td><span class="glyphicon glyphicon-folder-close"></span></td><td><a href="#" onclick="func('+directory.name+')" class="folderLink">' + directory.subdirectories[i] + '</a></td><td>Папка</td>')
+				if (directory.subdirectories!==undefined) {
+					for (var i = 0; i < directory.subdirectories.length; i++) {
+						$('#folder-view').append('<tr class="folderLink"><td align="center"><span class="glyphicon glyphicon-folder-close"></span></td><td class="tdName">' + directory.subdirectories[i] + '</td><td align="center">Папка</td>')
+					}
 				}
 			});
-			e.preventDefault(); // prevent actual form submit
+			e.preventDefault(); // prevent form submit
 		});
 
-		$('.folderLink').click(function() {
-			var name = $(this).html();
-			$.get('/dir/' + $('#parentUp').html().split("\\").join("-_-") + $('#folderResponse').html() + '-_-' + name, function(directory) {
-				$('#folderResponse').text(directory.name);
-				$('#parentUp').text(directory.parent);
-				$('#folder-view').empty();
-				$('#folder-view').append('<thead><td>/</td><td>Имя</td><td>Тип</td></thead>')
-				if (directory.files != undefined) {
-					for (var i = 0; i < directory.files.length; i++) {
-						$('#folder-view').append('<tr><td><span class="glyphicon glyphicon-file"></span></td><td>' + directory.files[i] + '</td><td>Файл</td>')
-					}
-				}
-				if (directory.subdirectories != undefined) {
-					for (var i = 0; i < directory.subdirectories.length; i++) {
-						$('#folder-view').append('<tr><td><span class="glyphicon glyphicon-folder-close"></span></td><td><a href="#" class="folderLink">' + directory.subdirectories[i] + '</a></td><td>Папка</td>')
-					}
-				}
-			});
-		});
-
-		function func (name) {
-			//var name = $(this).html();
-			$.get('/dir/' + $('#parentUp').html().split("\\").join("-_-") + $('#folderResponse').html() + '-_-' + name, function(directory) {
-				$('#folderResponse').text(directory.name);
-				$('#parentUp').text(directory.parent);
-				$('#folder-view').empty();
-				$('#folder-view').append('<thead><td>/</td><td>Имя</td><td>Тип</td></thead>')
-				if (directory.files != undefined) {
-					for (var i = 0; i < directory.files.length; i++) {
-						$('#folder-view').append('<tr><td><span class="glyphicon glyphicon-file"></span></td><td>' + directory.files[i] + '</td><td>Файл</td>')
-					}
-				}
-				if (directory.subdirectories != undefined) {
-					for (var i = 0; i < directory.subdirectories.length; i++) {
-						$('#folder-view').append('<tr><td><span class="glyphicon glyphicon-folder-close"></span></td><td><a href="#" class="folderLink">' + directory.subdirectories[i] + '</a></td><td>Папка</td>')
-					}
-				}
-			});
-		}
+		$('#idForm').submit();
 	</script>
 	<script src="/static/js/bootstrap.min.js"></script>
 </body>

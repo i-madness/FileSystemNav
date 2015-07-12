@@ -13,8 +13,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import service.DirectoryService;
 import service.PreferenceService;
 
-import java.io.FileNotFoundException;
-
 @Controller
 @RequestMapping("/")
 @EnableWebMvc
@@ -23,19 +21,14 @@ public class DirectoryController {
 	@RequestMapping("/")
 	public String printWelcome(@RequestParam(required = false) String str, ModelMap model) {
 		//model.addAttribute("smth", str);
-		try {
-			PreferenceService.setPreferences(new Preferences("C:/",15,true,false,false));
-		}catch (Exception e) {}
+		model.addAttribute("initialDirectory",PreferenceService.getPreferences().getInitialDirectory());
 		return "index";
 	}
 
 	@RequestMapping("/dir/{path}")
 	@ResponseBody
 	public Directory showDir(@PathVariable String path, ModelMap model) {
-		Preferences preferences = null;
-		try {
-			preferences = PreferenceService.getPreferences();
-		} catch (FileNotFoundException e) { preferences = new Preferences(); } // just using default values in case of exception
+		Preferences preferences = PreferenceService.getPreferences();
 		return DirectoryService.getDirectoryByPath(path, preferences);
 	}
 

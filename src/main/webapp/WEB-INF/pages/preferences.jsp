@@ -32,8 +32,14 @@
   </div>
 </div>
 
+<div>
+  <div id="message" class="alert alert-success col-md-4 col-md-offset-4" style="display: none">
+    Изменения успешно сохранены
+  </div>
+</div>
+
 <div class="container col-md-8 col-md-offset-2">
-  <h2>Настройки:</h2>
+  <h2>Настройки:</h2><hr/>
   <form id="prefForm">
     <div class="row prefs">
       <div class="col-md-4">Начальная папка</div>
@@ -60,15 +66,18 @@
       <div class="col-md-4"><input id="folders" type="checkbox" <c:if test="${ShowFoldersOnly}"><%out.print("checked");%></c:if>></div><br/>
     </div>
     <hr/>
-      <input type="submit" class="btn btn-primary" value="Сохранить изменения">
+    <div>
+      <input type="submit" formaction="prefForm" class="btn btn-primary" value="Сохранить изменения">
+      <button class="btn" onclick="window.location.href='/'">Отменить</button>
+    </div>
   </form>
-  <button class="btn" onclick="window.location.href='/'">Отменить</button>
+
 
 </div><!-- /.container -->
 
 <script language="JavaScript">
   $('#prefForm').submit(function(e){
-    //e.preventDefault();
+    e.preventDefault();
     $.ajax({
       type: 'POST',
       url: '/savePrefs',
@@ -79,7 +88,11 @@
         showHiddenFiles:  $('#hidden').prop("checked"),
         showFoldersOnly:  $('#openable').prop("checked"),
         showOpenableOnly: $('#folders').prop("checked")
-      })
+      }),
+      success: function() {
+        $('#message').show();
+        setTimeout('location.replace("/")',3000)
+      }
     });
   })
 </script>

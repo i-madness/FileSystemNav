@@ -10,7 +10,7 @@ public class Preferences {
 
     public Preferences() { }
 
-    public Preferences(String initialDirectory, Integer maxNestingLevel, Boolean showHiddenFiles, Boolean showFoldersOnly, Boolean showOpenableOnly) {
+    public Preferences(String initialDirectory, Integer maxNestingLevel, Boolean showOpenableOnly, Boolean showFoldersOnly, Boolean showHiddenFiles) {
         this.initialDirectory = initialDirectory;
         this.maxNestingLevel = maxNestingLevel;
         this.showHiddenFiles = showHiddenFiles;
