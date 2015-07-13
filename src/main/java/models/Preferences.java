@@ -6,16 +6,14 @@ public class Preferences {
     private Integer maxNestingLevel = 10;
     private Boolean showHiddenFiles = false;
     private Boolean showFoldersOnly = false;
-    private Boolean showOpenableOnly = false;
 
     public Preferences() { }
 
-    public Preferences(String initialDirectory, Integer maxNestingLevel, Boolean showOpenableOnly, Boolean showFoldersOnly, Boolean showHiddenFiles) {
+    public Preferences(String initialDirectory, Integer maxNestingLevel, Boolean showHiddenFiles, Boolean showFoldersOnly, Boolean showOpenableOnly) {
         this.initialDirectory = initialDirectory;
         this.maxNestingLevel = maxNestingLevel;
         this.showHiddenFiles = showHiddenFiles;
         this.showFoldersOnly = showFoldersOnly;
-        this.showOpenableOnly = showOpenableOnly;
     }
 
     public Boolean getShowHiddenFiles() {
@@ -48,14 +46,6 @@ public class Preferences {
 
     public void setInitialDirectory(String initialDirectory) {
         this.initialDirectory = initialDirectory;
-    }
-
-    public Boolean getShowOpenableOnly() {
-        return showOpenableOnly;
-    }
-
-    public void setShowOpenableOnly(Boolean showOpenableOnly) {
-        this.showOpenableOnly = showOpenableOnly;
     }
 
 }

@@ -56,11 +56,11 @@
       <div class="col-md-4"><input id="hidden" type="checkbox" <c:if test="${ShowHidden}"><%out.print("checked");%></c:if>></div><br/>
     </div>
     <hr/>
-    <div class="row prefs">
+    <!--div class="row prefs">
       <div class="col-md-4">Из файлов отображать только открываемые</div>
-      <div class="col-md-4"><input id="openable" type="checkbox" <c:if test="${ShowOpenableOnly}"><%out.print("checked");%></c:if>></div><br/>
+      <div class="col-md-4"><input id="openable" type="checkbox" <c:if test="${ShowOpenableOnly}"><%//out.print("checked");%></c:if>></div><br/>
     </div>
-    <hr/>
+    <hr/-->
     <div class="row prefs">
       <div class="col-md-4">Отображать только папки</div>
       <div class="col-md-4"><input id="folders" type="checkbox" <c:if test="${ShowFoldersOnly}"><%out.print("checked");%></c:if>></div><br/>
@@ -68,10 +68,11 @@
     <hr/>
     <div>
       <input type="submit" formaction="prefForm" class="btn btn-primary" value="Сохранить изменения">
-      <button class="btn" onclick="window.location.href='/'">Отменить</button>
+
     </div>
   </form>
-
+  <br/>
+  <button class="btn" onclick="window.location.href='/'">Отменить</button>
 
 </div><!-- /.container -->
 
@@ -86,8 +87,8 @@
         initialDirectory: $('#initial').val(),
         maxNestingLevel:  $('#nesting').val(),
         showHiddenFiles:  $('#hidden').prop("checked"),
-        showFoldersOnly:  $('#openable').prop("checked"),
-        showOpenableOnly: $('#folders').prop("checked")
+        showOpenableOnly: $('#folders').prop("checked"),
+        showFoldersOnly:  $('#openable').prop("checked")
       }),
       success: function() {
         $('#message').show();

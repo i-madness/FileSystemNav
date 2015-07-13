@@ -8,17 +8,10 @@ import java.util.ArrayList;
 
 public class DirectoryService {
 
-    private static ArrayList<String> openableExtensions = new ArrayList<String>();
-    static {
-        openableExtensions.add("doc");
-        openableExtensions.add("docx");
-        openableExtensions.add("txt");
-        openableExtensions.add("html");
-        openableExtensions.add("xml");
-    }
     // main service method; directory to be shown in json format
-    public static Directory getDirectoryByPath(String path, Preferences preferences) {
+    public static Directory getDirectoryByPath(String path, Preferences preferences) throws Exception {
         String correctPath = path.replaceAll("-_-","/"); // path variable format: C:-_-Directory1-_-directory2-_-...
+        correctPath = new String(correctPath.getBytes("ISO8859-1"), "UTF-8"); // handling encoding issues
         // this way we look at the nesting level of the folder
         if (correctPath.split("/").length > preferences.getMaxNestingLevel())
             return null;
@@ -29,18 +22,13 @@ public class DirectoryService {
             ArrayList<String> files   = new ArrayList<String>();
             File[] allFiles = pathDir.listFiles();
             for (File f : allFiles)
-                if (f.isDirectory() && f.getName().charAt(0)!='$') // to exclude system folders $Recycle.Bin etc.
+                if (f.isDirectory() && !f.isHidden() && !f.getName().contains("$")) // to exclude system folders $Recycle.Bin etc.
                     subdirs.add(f.getName());
-                else if (f.isFile() && !preferences.getShowFoldersOnly()) {
-                    // if necessary to show openable files only, we watch at the files extension this way
-                    if (preferences.getShowOpenableOnly() && openableExtensions.contains(f.getName().split(".")[f.getName().length() - 1]))
+                else if (f.isFile()) {
+                    if (!preferences.getShowHiddenFiles() && !f.isHidden())
                         files.add(f.getName());
-                    else {
-                        if (!preferences.getShowHiddenFiles() && !f.isHidden())
-                            files.add(f.getName());
-                        else if (preferences.getShowHiddenFiles() && f.isHidden())
-                            files.add(f.getName());
-                    }
+                    else if (preferences.getShowHiddenFiles() && f.isHidden())
+                        files.add(f.getName());
                 }
             Directory directory = new Directory(subdirs, files, correctPath, pathDir.getName(), parent);
             return directory;

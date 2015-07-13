@@ -22,7 +22,7 @@ public class PreferenceController {
         model.addAttribute("MaxNestingLevel",preferences.getMaxNestingLevel());
         model.addAttribute("ShowFoldersOnly",preferences.getShowFoldersOnly());
         model.addAttribute("ShowHidden",preferences.getShowHiddenFiles());
-        model.addAttribute("ShowOpenableOnly",preferences.getShowOpenableOnly());
+        //model.addAttribute("ShowOpenableOnly",preferences.getShowOpenableOnly());
         return "preferences";
     }
 

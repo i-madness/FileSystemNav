@@ -27,7 +27,7 @@ public class PreferenceService {
 
     public static Preferences getPreferencesFromXML() throws FileNotFoundException {
         FileInputStream fileInputStream = new FileInputStream("preferences.xml");
-        //String path = new File("preferences.xml").getAbsolutePath();
+        //String path = new ReadableFile("preferences.xml").getAbsolutePath();
         XMLDecoder xmlDecoder = new XMLDecoder(fileInputStream);
         Preferences preferences = (Preferences) xmlDecoder.readObject();
         xmlDecoder.close();

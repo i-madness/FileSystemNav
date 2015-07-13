@@ -1,6 +1,5 @@
 package controllers;
 
-import app.DocumentReader;
 import models.Directory;
 import models.Preferences;
 import org.springframework.stereotype.Controller;
@@ -20,23 +19,15 @@ public class DirectoryController {
 
 	@RequestMapping("/")
 	public String printWelcome(@RequestParam(required = false) String str, ModelMap model) {
-		//model.addAttribute("smth", str);
 		model.addAttribute("initialDirectory",PreferenceService.getPreferences().getInitialDirectory());
 		return "index";
 	}
 
 	@RequestMapping("/dir/{path}")
 	@ResponseBody
-	public Directory showDir(@PathVariable String path, ModelMap model) {
+	public Directory showDir(@PathVariable String path) throws Exception {
 		Preferences preferences = PreferenceService.getPreferences();
 		return DirectoryService.getDirectoryByPath(path, preferences);
 	}
 
-	// test controller for .doc files view
-	@RequestMapping("/docx")
-	public String outputDocx(ModelMap model) {
-		DocumentReader documentReader = new DocumentReader("C:/Users/Валерий/Desktop/Курсовая - блог-хостинг.docx");
-		model.addAttribute("content", documentReader.contentList);
-		return "docx";
-	}
 }
