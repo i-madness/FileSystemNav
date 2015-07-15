@@ -87,7 +87,6 @@
         initialDirectory: $('#initial').val(),
         maxNestingLevel:  $('#nesting').val(),
         showHiddenFiles:  $('#hidden').prop("checked"),
-        showOpenableOnly: $('#folders').prop("checked"),
         showFoldersOnly:  $('#openable').prop("checked")
       }),
       success: function() {

@@ -14,10 +14,10 @@ public class ReadableFileService {
 
     private static ArrayList<String> openableExtensions = new ArrayList<String>();
     static {
-        openableExtensions.add(".txt");
-        openableExtensions.add(".log");
-        openableExtensions.add(".xml");
-        openableExtensions.add(".html");
+        openableExtensions.add("txt");
+        openableExtensions.add("log");
+        openableExtensions.add("xml");
+        openableExtensions.add("html");
         // may add any readable extension of non-binary file
     }
 
@@ -42,6 +42,7 @@ public class ReadableFileService {
                 ArrayList<String> lines = new ArrayList<String>();
                 while ((line = reader.readLine()) != null)
                     lines.add(line);
+                reader.close();
                 return new ReadableFile(file.getName(),lines);
             }
             else {

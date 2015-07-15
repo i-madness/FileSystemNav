@@ -42,16 +42,22 @@
 		</table>
 	</div><!-- /.container -->
 
-	<!-- Modal for file view -->
-	<div id="fileView" class="modal hide fade">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h3 id="#fileName"></h3>
-		</div>
-		<div class="modal-body" id="fileContent">
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="btn">Закрыть</a>
+
+
+
+	<div class="modal fade bs-example-modal-lg" id="fileView" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="#fileName"></h4>
+				</div>
+				<div class="modal-body" id="fileContent">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+				</div>
 		</div>
 	</div>
 
@@ -81,12 +87,12 @@
 			currentDir = $('#pathInput').val();
 			$.get('/file/'+currentDir.split("/").join("-_-")+$(this).children('.tdName').text().replace('.','-__-'), function(ReadableFile) {
 				$('#fileName').text(ReadableFile.name);
+				$('#fileContent').empty();
 				var content;
 				for (var i = 0; i < ReadableFile.content.length; i++)
-					content += ReadableFile.content[i] + '<br/>';
-				$('#fileContent').text(content);
-			})
-			$("#fileView").modal('show')
+					$('#fileContent').append('<p>'+ReadableFile.content[i]+'</p>')
+			});
+			$("#fileView").modal()
 		});
 
 		$('#idForm').submit(function(e) {
@@ -103,7 +109,7 @@
 				}
 				if (directory.subdirectories!==undefined) {
 					for (var i = 0; i < directory.subdirectories.length; i++) {
-						$('#folder-view').append('<tr class="folderLink" data-toggle="modal" data-target="fileView"><td align="center"><span class="glyphicon glyphicon-folder-close"></span></td><td class="tdName">' + directory.subdirectories[i] + '</td><td align="center">Папка</td>')
+						$('#folder-view').append('<tr class="folderLink"><td align="center"><span class="glyphicon glyphicon-folder-close"></span></td><td class="tdName">' + directory.subdirectories[i] + '</td><td align="center">Папка</td>')
 					}
 				}
 			});

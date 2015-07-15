@@ -21,6 +21,8 @@ public class DirectoryService {
             ArrayList<String> subdirs = new ArrayList<String>();
             ArrayList<String> files   = new ArrayList<String>();
             File[] allFiles = pathDir.listFiles();
+            if (allFiles == null)
+                return new Directory(null, null, correctPath, pathDir.getName(), parent);
             for (File f : allFiles)
                 if (f.isDirectory() && !f.isHidden() && !f.getName().contains("$")) // to exclude system folders $Recycle.Bin etc.
                     subdirs.add(f.getName());
