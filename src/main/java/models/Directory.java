@@ -24,14 +24,6 @@ public class Directory {
         subdirectories.add(sub);
     }
 
-/*    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }*/
-
     public String getName() {
         return name;
     }

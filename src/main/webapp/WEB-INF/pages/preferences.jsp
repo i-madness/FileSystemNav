@@ -48,7 +48,7 @@
     <hr/>
     <div class="row prefs">
       <div class="col-md-4">Максимальный уровень вложенности:</div>
-      <div class="col-md-4"><input id="nesting" pattern="^[ 0-9]+$" value="${MaxNestingLevel}"></div>
+      <div class="col-md-4"><input id="nesting" pattern="^[0-9]{1,4}" value="${MaxNestingLevel}"></div>
     </div>
     <hr/>
     <div class="row prefs">
@@ -56,45 +56,48 @@
       <div class="col-md-4"><input id="hidden" type="checkbox" <c:if test="${ShowHidden}"><%out.print("checked");%></c:if>></div><br/>
     </div>
     <hr/>
-    <!--div class="row prefs">
-      <div class="col-md-4">Из файлов отображать только открываемые</div>
-      <div class="col-md-4"><input id="openable" type="checkbox" <c:if test="${ShowOpenableOnly}"><%//out.print("checked");%></c:if>></div><br/>
-    </div>
-    <hr/-->
     <div class="row prefs">
       <div class="col-md-4">Отображать только папки</div>
       <div class="col-md-4"><input id="folders" type="checkbox" <c:if test="${ShowFoldersOnly}"><%out.print("checked");%></c:if>></div><br/>
     </div>
     <hr/>
     <div>
-      <input type="submit" formaction="prefForm" class="btn btn-primary" value="Сохранить изменения">
-
+      <input type="submit" formaction="prefForm" class="btn btn-primary"    value="Сохранить изменения">
+      <input type="button" class="btn btn-info" onclick="backToDefaults()"  value="Восстановить значения по умолчанию">
+      <input type="button" class="btn" onclick="window.location.href='/'"   value="Отменить">
     </div>
   </form>
   <br/>
-  <button class="btn" onclick="window.location.href='/'">Отменить</button>
 
 </div><!-- /.container -->
 
 <script language="JavaScript">
-  $('#prefForm').submit(function(e){
-    e.preventDefault();
-    $.ajax({
-      type: 'POST',
-      url: '/savePrefs',
-      contentType: 'application/json',
-      data: JSON.stringify({
-        initialDirectory: $('#initial').val(),
-        maxNestingLevel:  $('#nesting').val(),
-        showHiddenFiles:  $('#hidden').prop("checked"),
-        showFoldersOnly:  $('#openable').prop("checked")
-      }),
-      success: function() {
-        $('#message').show();
-        setTimeout('location.replace("/")',3000)
-      }
-    });
-  })
+    $('#prefForm').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/savePrefs',
+            contentType: 'application/json',
+            data: JSON.stringify({
+              initialDirectory: $('#initial').val(),
+              maxNestingLevel:  $('#nesting').val(),
+              showHiddenFiles:  $('#hidden').prop("checked"),
+              showFoldersOnly:  $('#folders').prop("checked")
+            }),
+            success: function() {
+              $('#message').show();
+              setTimeout('location.replace("/")',3000)
+            }
+        });
+    })
+
+    var backToDefaults = function() {
+        $('#initial').val("C:/");
+        $('#nesting').val("30");
+        $('#hidden').prop("checked",false);
+        $('#folders').prop("checked",false);
+        $('#prefForm').submit();
+    }
 </script>
 
 <script src="/static/js/bootstrap.min.js"></script>

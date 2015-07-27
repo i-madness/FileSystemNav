@@ -8,9 +8,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-// encodes/decodes users preferences to/from xml file
+/**
+ * Stores current service preferences and provides access to it
+ */
 public class PreferenceService {
-
 
     private static Preferences currentPreferences;
     static {
@@ -25,6 +26,11 @@ public class PreferenceService {
         return currentPreferences;
     }
 
+    /**
+     * Decodes file preferences.xml to get an instance of current preferences
+     * @return models.Preferences object with current
+     * @throws FileNotFoundException if file not exists
+     */
     public static Preferences getPreferencesFromXML() throws FileNotFoundException {
         FileInputStream fileInputStream = new FileInputStream("preferences.xml");
         //String path = new ReadableFile("preferences.xml").getAbsolutePath();
@@ -34,6 +40,11 @@ public class PreferenceService {
         return preferences;
     }
 
+    /**
+     * Encodes current preferences to preferences.xml
+     * @param prefs preferences object to be encoded
+     * @throws FileNotFoundException if file not exists
+     */
     public static void setPreferences(Preferences prefs) throws FileNotFoundException {
         FileOutputStream fileOutputStream = new FileOutputStream("preferences.xml");
         XMLEncoder xmlEncoder = new XMLEncoder(fileOutputStream);

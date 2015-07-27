@@ -4,14 +4,24 @@ import models.Directory;
 import models.Preferences;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+
 
 public class DirectoryService {
 
-    // main service method; directory to be shown in json format
-    public static Directory getDirectoryByPath(String path, Preferences preferences) throws Exception {
+    /**
+     * Returns the directory with specified path.
+     * The list of subdirectories and nested files is defined by current preferences
+     * @param path a string of directory's path
+     * @param preferences an instance of current preferences on service
+     * @return an instance of models.Directory with specified path
+     */
+    public static Directory getDirectoryByPath(String path, Preferences preferences) {
         String correctPath = path.replaceAll("-_-","/"); // path variable format: C:-_-Directory1-_-directory2-_-...
-        correctPath = new String(correctPath.getBytes("ISO8859-1"), "UTF-8"); // handling encoding issues
+        try {
+            correctPath = new String(correctPath.getBytes("ISO8859-1"), "UTF-8"); // handling encoding issues
+        } catch (UnsupportedEncodingException e) { return null; }
         // this way we look at the nesting level of the folder
         if (correctPath.split("/").length > preferences.getMaxNestingLevel())
             return null;
@@ -26,7 +36,7 @@ public class DirectoryService {
             for (File f : allFiles)
                 if (f.isDirectory() && !f.isHidden() && !f.getName().contains("$")) // to exclude system folders $Recycle.Bin etc.
                     subdirs.add(f.getName());
-                else if (f.isFile()) {
+                else if (f.isFile() && !preferences.getShowFoldersOnly()) {
                     if (!preferences.getShowHiddenFiles() && !f.isHidden())
                         files.add(f.getName());
                     else if (preferences.getShowHiddenFiles() && f.isHidden())

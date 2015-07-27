@@ -11,10 +11,18 @@ import service.PreferenceService;
 
 import java.io.FileNotFoundException;
 
+/**
+ * Controller that handles preferences mapping
+ */
 @Controller
 @EnableWebMvc
 public class PreferenceController {
 
+    /**
+     * Shows current preferences into appropriate page
+     * @param  model ModelMap to add all data from preferences and to show it on the page
+     * @return the name of preferences page
+     */
     @RequestMapping("/preferences")
     public String showCustomizationPage(ModelMap model) {
         Preferences preferences = PreferenceService.getPreferences();
@@ -26,6 +34,10 @@ public class PreferenceController {
         return "preferences";
     }
 
+    /**
+     * Page that saves current preferences received in JSON from client via POST request method
+     * @param pref received object of preferences
+     */
     @RequestMapping(value = "/savePrefs", method = RequestMethod.POST)
     public String savePreferences(@RequestBody Preferences pref) {
         try {

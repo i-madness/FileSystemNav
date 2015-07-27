@@ -6,6 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="/static/js/jqBootstrapValidation.js"></script>
 	<link href="/static/css/bootstrap.css" rel="stylesheet">
 	<title>Навигация по ФС сервера</title>
 </head>
@@ -32,18 +33,26 @@
 	<div class="container col-md-8 col-md-offset-2">
 		<form id="idForm">
 			<label for="pathInput">Путь к папке: </label>
-			<input id="pathInput" value="${initialDirectory}" pattern="((\S+\s*)+[/])+" type="text" style="width: 30%; padding: 6px; margin: 15px" />
+			<input id="pathInput" value="${initialDirectory}" pattern="((\S+\s*)+[/])+"  placeholder="C:\Directory\Subdirectory\" type="text" style="width: 30%; padding: 6px; margin: 15px" />
 			<input class="btn btn-primary" type="submit" value="Вывести папку" /> <br />
-			<div>Текущая папка: <span id="folderResponse">C:/</span></div>
-			<div><span class="glyphicon glyphicon-arrow-up"></span><span id="parentUp"></span></div>
+			<div>Текущая папка: <span id="folderResponse">${initialDirectory}</span></div>
+			<div class="btn-group dropdown">
+				<button class="btn btn-default" id="parentBtn">
+					<span class="glyphicon glyphicon-arrow-up"></span><span id="parentUp"></span>
+				</button>
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					<span class="caret"></span>
+				</button>
+				<ul id="parentMenu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+				</ul>
+			</div>
+			<div></div>
 		</form>
 
 		<table id="folder-view" class="table table-bordered table-hover">
 		</table>
 	</div><!-- /.container -->
-
-
-
 
 	<div class="modal fade bs-example-modal-lg" id="fileView" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
@@ -53,7 +62,6 @@
 					<h4 class="modal-title" id="#fileName"></h4>
 				</div>
 				<div class="modal-body" id="fileContent">
-					...
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
@@ -64,6 +72,10 @@
 	<script type="text/javascript">
 		var currentDir='${initialDirectory}';
 
+		$('#pathInput').validationMessage = "Введите имя директории в формате Root/Dir/Subdir/..."
+
+
+
 		// linking folders in table
 		$('body').on('click','.folderLink', function() {
 			currentDir = $(this).children('.tdName').text();
@@ -72,7 +84,8 @@
 		});
 
 		// linking parent folder
-		$('body').on('click','#parentUp', function() {
+		$('body').on('click','#parentBtn', function(e) {
+			e.preventDefault();
 			var dir = $('#pathInput').val();
 			if (dir.length > 3) {
 				var pos = dir.length - 2;
@@ -83,6 +96,7 @@
 			}
 		});
 
+		// linking files
 		$('body').on('click','.fileLink', function() {
 			currentDir = $('#pathInput').val();
 			$.get('/file/'+currentDir.split("/").join("-_-")+$(this).children('.tdName').text().replace('.','-__-'), function(ReadableFile) {
@@ -91,7 +105,10 @@
 				var content;
 				for (var i = 0; i < ReadableFile.content.length; i++)
 					$('#fileContent').append('<p>'+ReadableFile.content[i]+'</p>')
-			});
+			})
+					.fail(function(){
+						$('#fileContent').text('Файл не может быть отображен')
+					});
 			$("#fileView").modal()
 		});
 
@@ -99,7 +116,22 @@
 			currentDir = $('#pathInput').val();
 			$.get('/dir/' + currentDir.split("/").join("-_-"), function(directory) {
 				$('#folderResponse').text(directory.name);
-				$('#parentUp').text(directory.parent==null ? '(корневая директория)' : directory.parent);
+				$('#parentUp').text(directory.parent==null ? '(корневая директория)' : directory.parent.split("\\").join("/"))
+				$('#parentMenu').empty();
+				if (currentDir.length > 3) {
+					var pos = currentDir.length - 2;
+					var parents = [];
+					while (pos >= 0) {
+						if (currentDir[pos] == "\\");
+							parents.push(currentDir.substr(0,pos+1));
+						pos--;
+					}
+					for (var i = 0; i < parents.length; i++)
+						$('#parentMenu').append('<li><a href="#" class="menu-item>'+parents[i]+'</a></li>')
+					$('body').on('click','.menu-item', function(){
+						$('#parentUp').text($(this).html())
+					})
+				}
 				$('#folder-view').empty();
 				$('#folder-view').append('<thead><td>/</td><td>Имя</td><td>Тип</td></thead>')
 				if (directory.files!==undefined) {
@@ -118,6 +150,8 @@
 
 		// submitting data after page loads
 		$('#idForm').submit();
+
+
 	</script>
 	<script src="/static/js/bootstrap.min.js"></script>
 </body>

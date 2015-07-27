@@ -12,20 +12,33 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import service.DirectoryService;
 import service.PreferenceService;
 
+/**
+ * Controller that handles directory mapping
+ */
 @Controller
 @RequestMapping("/")
 @EnableWebMvc
 public class DirectoryController {
 
+	/**
+	 * Shows initial directory (stored in current preferences) when user opens the main page of service
+	 * @param  model ModelMap to add necessary data
+	 * @return the name of default page
+	 */
 	@RequestMapping("/")
-	public String printWelcome(@RequestParam(required = false) String str, ModelMap model) {
+	public String printWelcome(ModelMap model) {
 		model.addAttribute("initialDirectory",PreferenceService.getPreferences().getInitialDirectory());
 		return "index";
 	}
 
+	/**
+	 * Returns JSON object of directory with specified path. Next it will be recieved by client.
+	 * @param path the exact path of directory
+	 * @return object of Directory with specified path considering current preferences
+	 */
 	@RequestMapping("/dir/{path}")
 	@ResponseBody
-	public Directory showDir(@PathVariable String path) throws Exception {
+	public Directory showDir(@PathVariable String path) {
 		Preferences preferences = PreferenceService.getPreferences();
 		return DirectoryService.getDirectoryByPath(path, preferences);
 	}

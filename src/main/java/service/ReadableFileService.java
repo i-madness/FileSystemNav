@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Валерий on 10.07.2015.
+ * A class that provides an access to non-binary file's content.
+ * Extensions are written down in static block
  */
 public class ReadableFileService {
 
@@ -21,12 +22,23 @@ public class ReadableFileService {
         // may add any readable extension of non-binary file
     }
 
-    public static ReadableFile getDocumentByPath(String path) throws Exception {
+    /**
+     * Returns an object of readable file that has specified path.
+     * Path string should have format like 'Root-_-Dir-_-File-__-ext'
+     * where -_- is replaced for '/' and -__- is replaced for '.'.
+     * If file exists and can be read than
+     * @param  path a string of file's path
+     * @throws IOException if file is not found
+     * @return instance of models.ReadableFile with specified path
+     */
+    public static ReadableFile getDocumentByPath(String path) throws IOException {
         path = path.replace("-_-","/");
         path = path.replace("-__-",".");
-        path = new String(path.getBytes("ISO8859-1"), "UTF-8"); // handling encoding issues
+        try {
+            path = new String(path.getBytes("ISO8859-1"), "UTF-8"); // handling encoding issues
+        } catch (UnsupportedEncodingException e) { return null; }
         java.io.File file = new java.io.File(path);
-        if (file.getName().contains(".doc")) {
+        /*if (file.getName().contains(".doc")) {
             WordprocessingMLPackage wmlp = WordprocessingMLPackage.load(file);
             List<Object> objs = wmlp.getMainDocumentPart().getContent();
             ArrayList<String> lines = new ArrayList<String>();
@@ -34,21 +46,26 @@ public class ReadableFileService {
                 lines.add(obj.toString());
             return new ReadableFile(file.getName(), lines);
         }
-        else { // looking at the extension
+        else {*/ // looking at the extension
             String[] fileNameParts = path.split("[.]");
             if (openableExtensions.contains(fileNameParts[fileNameParts.length - 1])){
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                String line;
+                BufferedReader reader = null;
                 ArrayList<String> lines = new ArrayList<String>();
-                while ((line = reader.readLine()) != null)
-                    lines.add(line);
-                reader.close();
+                try {
+                    reader = new BufferedReader(new FileReader(file));
+                    String line;
+                    while ((line = reader.readLine()) != null)
+                        lines.add(line);
+                } finally {
+                    if (reader != null)
+                        reader.close();
+                }
                 return new ReadableFile(file.getName(),lines);
             }
             else {
                 return new ReadableFile(file.getName(), null);
             }
-        }
+        //}
     }
 
 
