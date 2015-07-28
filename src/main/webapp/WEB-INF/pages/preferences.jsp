@@ -43,12 +43,12 @@
   <form id="prefForm">
     <div class="row prefs">
       <div class="col-md-4">Начальная папка</div>
-      <div class="col-md-4"><input id="initial" pattern="((\S+\s*)+[/])+" value="${InitialDir}"></div>
+      <div class="col-md-4"><input data-toggle="tooltip" data-placement="right" title="Введите директорию в формате: Root:/Dir/SubDir" id="initial" pattern="((\S+\s*)+[/])+" value="${InitialDir}"></div>
     </div>
     <hr/>
     <div class="row prefs">
       <div class="col-md-4">Максимальный уровень вложенности:</div>
-      <div class="col-md-4"><input id="nesting" pattern="^[0-9]{1,4}" value="${MaxNestingLevel}"></div>
+      <div class="col-md-4"><input data-toggle="tooltip" data-placement="right" title="Введите четырёхзначное число" id="nesting" pattern="^[0-9]{1,4}" value="${MaxNestingLevel}"></div>
     </div>
     <hr/>
     <div class="row prefs">
@@ -72,6 +72,9 @@
 </div><!-- /.container -->
 
 <script language="JavaScript">
+
+    $(function () { $("[data-toggle='tooltip']").tooltip(); });
+
     $('#prefForm').submit(function(e){
         e.preventDefault();
         $.ajax({

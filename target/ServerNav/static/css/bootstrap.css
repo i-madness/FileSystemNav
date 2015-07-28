@@ -5087,6 +5087,11 @@ a.list-group-item-danger.active:focus {
 .panel-body {
   padding: 15px;
 }
+#pathInput {
+  width: 30%;
+  padding: 6px;
+  margin: 20px
+}
 .panel-heading {
   padding: 10px 15px;
   border-bottom: 1px solid transparent;

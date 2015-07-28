@@ -19,6 +19,7 @@ public class DirectoryService {
      */
     public static Directory getDirectoryByPath(String path, Preferences preferences) {
         String correctPath = path.replaceAll("-_-","/"); // path variable format: C:-_-Directory1-_-directory2-_-...
+        correctPath = correctPath.replaceAll("-__-",".");
         try {
             correctPath = new String(correctPath.getBytes("ISO8859-1"), "UTF-8"); // handling encoding issues
         } catch (UnsupportedEncodingException e) { return null; }
