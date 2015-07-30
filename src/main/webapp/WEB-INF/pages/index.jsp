@@ -40,14 +40,14 @@
 				<button class="btn btn-default" id="parentBtn">
 					<span class="glyphicon glyphicon-arrow-up"></span><span id="parentUp"></span>
 				</button>
-				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownParent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 					<span class="caret"></span>
 				</button>
 				<ul id="parentMenu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
 
 				</ul>
 			</div>
-			<div></div>
+
 		</form>
 
 		<table id="folder-view" class="table table-bordered table-hover">
@@ -59,22 +59,18 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title"><span id="fileName">Файл: </span></h4>
+					<h4 class="modal-title">Просмотр файла: <span id="fileName"></span></h4>
 				</div>
 				<div class="modal-body" id="fileContent">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
 				</div>
+			</div>
 		</div>
 	</div>
-
 	<script type="text/javascript">
 		var currentDir='${initialDirectory}';
-
-		$('#pathInput').validationMessage = "Введите имя директории в формате Root/Dir/Subdir/..."
-
-
 
 		// linking folders in table
 		$('body').on('click','.folderLink', function() {
@@ -87,11 +83,13 @@
 		$('body').on('click','#parentBtn', function(e) {
 			e.preventDefault();
 			var dir = $('#pathInput').val();
+			var par = $('#parentUp').text();
 			if (dir.length > 3) {
-				var pos = dir.length - 2;
+			 /*var pos = dir.length - 2;
 				while (dir[pos] != '/')
 					pos--;
-				$('#pathInput').val(dir.substr(0, pos+1))
+				$('#pathInput').val(dir.substr(0, pos+1))*/
+				$('#pathInput').val(par[par.length-1]=='/' ? par : par + '/')
 				$('#idForm').submit();
 			}
 		});
@@ -100,7 +98,7 @@
 		$('body').on('click','.fileLink', function() {
 			currentDir = $('#pathInput').val();
 			$.get('/file/'+currentDir.split("/").join("-_-")+$(this).children('.tdName').text().split(".").join('-__-'), function(ReadableFile) {
-				$('#fileName').text('Просмотр файла: '+ReadableFile.name);
+				$('#fileName').text(ReadableFile.name);
 				$('#fileContent').empty();
 				if (ReadableFile.content == null)
 					$('#fileContent').text('Файл не может быть отображен')
@@ -117,27 +115,27 @@
 
 		$('#idForm').submit(function(e) {
 			currentDir = $('#pathInput').val();
+			if (currentDir[currentDir.length-1]!='/')
+				$('#pathInput').text(currentDir = currentDir.concat('/'))
 			$.get('/dir/' + currentDir.split("/").join("-_-").split(".").join('-__-'), function(directory) {
 				$('#folderResponse').text(directory.name);
-				$('#parentUp').text(directory.parent==null ? '(корневая директория)' : directory.parent) //.split("\\").join("/"))
+				$('#parentUp').text(directory.parent==null ? '(корневая директория)' : directory.parent.split("\\").join("/"))
+				if (directory.parent==null)
+					$('#dropdownParent').addClass('disabled');
+				else if ($('#dropdownParent').hasClass('disabled'))
+					$('#dropdownParent').removeClass('disabled');
 				$('#parentMenu').empty();
 				if (currentDir.length > 3) {
 					var pos = currentDir.length - 2;
 					var parents = [];
 					while (pos >= 0) {
-						if (currentDir[pos] == "/");
+						if (currentDir[pos] == "/")
 							parents.push(currentDir.substr(0,pos+1));
 						pos--;
 					}
-					/*var curentDirParts = currentDir.split("/");
-					for (var i = 0; i < curentDirParts.length; i++) {
-						var parentPart;
-						for (var j = 0; j < i; i++) {
-							parentPart = parentPart.concat(curentDirParts[j])
-						}
-					}*/
+
 					for (var i = 0; i < parents.length; i++)
-						$('#parentMenu').append('<li><a href="#" class="menu-item>'+parents[i]+'</a></li>')
+						$('#parentMenu').append('<li><a href="#" class="menu-item">'.concat(parents[i]).concat('</a></li>'))
 					$('body').on('click','.menu-item', function(){
 						$('#parentUp').text($(this).html())
 					})
@@ -149,7 +147,7 @@
 						$('#folder-view').append('<tr class="fileLink"><td align="center"><span class="glyphicon glyphicon-file"></span></td><td class="tdName">' + directory.files[i] + '</td><td align="center">Файл</td>')
 					}
 				}
-				if (directory.subdirectories!==undefined) {
+				if (directory.subdirectories!==undefined && directory.subdirectories!=null) {
 					for (var i = 0; i < directory.subdirectories.length; i++) {
 						$('#folder-view').append('<tr class="folderLink"><td align="center"><span class="glyphicon glyphicon-folder-close"></span></td><td class="tdName">' + directory.subdirectories[i] + '</td><td align="center">Папка</td>')
 					}

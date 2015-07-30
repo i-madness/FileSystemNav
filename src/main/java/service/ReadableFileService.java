@@ -38,34 +38,26 @@ public class ReadableFileService {
             path = new String(path.getBytes("ISO8859-1"), "UTF-8"); // handling encoding issues
         } catch (UnsupportedEncodingException e) { return null; }
         java.io.File file = new java.io.File(path);
-        /*if (file.getName().contains(".doc")) {
-            WordprocessingMLPackage wmlp = WordprocessingMLPackage.load(file);
-            List<Object> objs = wmlp.getMainDocumentPart().getContent();
+
+        String[] fileNameParts = path.split("[.]");
+        if (openableExtensions.contains(fileNameParts[fileNameParts.length - 1])){
+            BufferedReader reader = null;
             ArrayList<String> lines = new ArrayList<String>();
-            for (Object obj : objs)
-                lines.add(obj.toString());
-            return new ReadableFile(file.getName(), lines);
+            try {
+                reader = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = reader.readLine()) != null)
+                    lines.add(line);
+            } finally {
+                if (reader != null)
+                    reader.close();
+            }
+            return new ReadableFile(file.getName(),lines);
         }
-        else {*/ // looking at the extension
-            String[] fileNameParts = path.split("[.]");
-            if (openableExtensions.contains(fileNameParts[fileNameParts.length - 1])){
-                BufferedReader reader = null;
-                ArrayList<String> lines = new ArrayList<String>();
-                try {
-                    reader = new BufferedReader(new FileReader(file));
-                    String line;
-                    while ((line = reader.readLine()) != null)
-                        lines.add(line);
-                } finally {
-                    if (reader != null)
-                        reader.close();
-                }
-                return new ReadableFile(file.getName(),lines);
-            }
-            else {
-                return new ReadableFile(file.getName(), null);
-            }
-        //}
+        else {
+            return new ReadableFile(file.getName(), null);
+        }
+
     }
 
 

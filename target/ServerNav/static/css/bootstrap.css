@@ -5088,9 +5088,12 @@ a.list-group-item-danger.active:focus {
   padding: 15px;
 }
 #pathInput {
-  width: 30%;
+  width: 50%;
   padding: 6px;
   margin: 20px
+}
+#fileName {
+  font-weight: bold;
 }
 .panel-heading {
   padding: 10px 15px;
