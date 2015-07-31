@@ -118,39 +118,50 @@
 			if (currentDir[currentDir.length-1]!='/')
 				$('#pathInput').text(currentDir = currentDir.concat('/'))
 			$.get('/dir/' + currentDir.split("/").join("-_-").split(".").join('-__-'), function(directory) {
-				$('#folderResponse').text(directory.name);
-				$('#parentUp').text(directory.parent==null ? '(корневая директория)' : directory.parent.split("\\").join("/"))
-				if (directory.parent==null)
-					$('#dropdownParent').addClass('disabled');
-				else if ($('#dropdownParent').hasClass('disabled'))
-					$('#dropdownParent').removeClass('disabled');
-				$('#parentMenu').empty();
-				if (currentDir.length > 3) {
+				if (directory!==undefined && directory.name.indexOf('(forbidden!)')==-1) {
+					$('#folderResponse').text(directory.name);
+					$('#parentUp').text(directory.parent == null ? '(корневая директория)' : directory.parent.split("\\").join("/"))
+					if (directory.parent == null)
+						$('#dropdownParent').addClass('disabled');
+					else if ($('#dropdownParent').hasClass('disabled'))
+						$('#dropdownParent').removeClass('disabled');
+					$('#parentMenu').empty();
+					if (currentDir.length > 3) {
+						var pos = currentDir.length - 2;
+						var parents = [];
+						while (pos >= 0) {
+							if (currentDir[pos] == "/")
+								parents.push(currentDir.substr(0, pos + 1));
+							pos--;
+						}
+
+						for (var i = 0; i < parents.length; i++)
+							$('#parentMenu').append('<li><a href="#" class="menu-item">'.concat(parents[i]).concat('</a></li>'))
+						$('body').on('click', '.menu-item', function () {
+							$('#parentUp').text($(this).html())
+							$('#parentBtn').click()
+						})
+					}
+					$('#folder-view').empty();
+					$('#folder-view').append('<thead><td>/</td><td>Имя</td><td>Тип</td></thead>')
+					if (directory.files !== undefined && directory.files != null) {
+						for (var i = 0; i < directory.files.length; i++) {
+							$('#folder-view').append('<tr class="fileLink"><td align="center"><span class="glyphicon glyphicon-file"></span></td><td class="tdName">' + directory.files[i] + '</td><td align="center">Файл</td>')
+						}
+					}
+					if (directory.subdirectories !== undefined && directory.subdirectories != null) {
+						for (var i = 0; i < directory.subdirectories.length; i++) {
+							$('#folder-view').append('<tr class="folderLink"><td align="center"><span class="glyphicon glyphicon-folder-close"></span></td><td class="tdName">' + directory.subdirectories[i] + '</td><td align="center">Папка</td>')
+						}
+					}
+				} else {
 					var pos = currentDir.length - 2;
-					var parents = [];
-					while (pos >= 0) {
-						if (currentDir[pos] == "/")
-							parents.push(currentDir.substr(0,pos+1));
+					while (pos>=0 && currentDir[pos] != "/") {
 						pos--;
 					}
+					alert('Директория не может быть показана!')
+					$('#pathInput').val(currentDir.substr(0, pos + 1))
 
-					for (var i = 0; i < parents.length; i++)
-						$('#parentMenu').append('<li><a href="#" class="menu-item">'.concat(parents[i]).concat('</a></li>'))
-					$('body').on('click','.menu-item', function(){
-						$('#parentUp').text($(this).html())
-					})
-				}
-				$('#folder-view').empty();
-				$('#folder-view').append('<thead><td>/</td><td>Имя</td><td>Тип</td></thead>')
-				if (directory.files!==undefined && directory.files!=null) {
-					for (var i = 0; i < directory.files.length; i++) {
-						$('#folder-view').append('<tr class="fileLink"><td align="center"><span class="glyphicon glyphicon-file"></span></td><td class="tdName">' + directory.files[i] + '</td><td align="center">Файл</td>')
-					}
-				}
-				if (directory.subdirectories!==undefined && directory.subdirectories!=null) {
-					for (var i = 0; i < directory.subdirectories.length; i++) {
-						$('#folder-view').append('<tr class="folderLink"><td align="center"><span class="glyphicon glyphicon-folder-close"></span></td><td class="tdName">' + directory.subdirectories[i] + '</td><td align="center">Папка</td>')
-					}
 				}
 			});
 			e.preventDefault(); // prevent form submit

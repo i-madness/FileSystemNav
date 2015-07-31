@@ -24,10 +24,10 @@ public class DirectoryService {
             correctPath = new String(correctPath.getBytes("ISO8859-1"), "UTF-8"); // handling encoding issues
         } catch (UnsupportedEncodingException e) { return null; }
         // this way we look at the nesting level of the folder
-        if (correctPath.split("/").length > preferences.getMaxNestingLevel())
-            return null;
         File pathDir = new File(correctPath);
         String parent = pathDir.getParent();
+        if (correctPath.split("/").length > preferences.getMaxNestingLevel())
+            return new Directory(null,null,correctPath,pathDir.getName()+"(forbidden!)",parent);
         if (pathDir.exists() && pathDir.isDirectory()) {
             ArrayList<String> subdirs = new ArrayList<String>();
             ArrayList<String> files   = new ArrayList<String>();
