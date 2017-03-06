@@ -15,7 +15,6 @@ import java.io.IOException;
  * Controller that provides file output into the page
  */
 @Controller
-@EnableWebMvc
 public class ReadableFileController {
 
     /**
