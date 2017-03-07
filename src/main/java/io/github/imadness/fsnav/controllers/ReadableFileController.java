@@ -1,12 +1,12 @@
-package controllers;
+package io.github.imadness.fsnav.controllers;
 
-import models.ReadableFile;
+import io.github.imadness.fsnav.models.ReadableFile;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import service.ReadableFileService;
+import io.github.imadness.fsnav.service.ReadableFileService;
 
 import java.io.IOException;
 
@@ -16,9 +16,12 @@ import java.io.IOException;
  */
 @Controller
 public class ReadableFileController {
+    @Autowired
+    private ReadableFileService readableFileService;
 
     /**
-     * Object of models.ReadableFile to be recieved by client in JSON format
+     * Object of models.ReadableFile to be received by client in JSON format
+     *
      * @param path a path variable
      * @return specified ReadableFile
      * @throws Exception
@@ -27,9 +30,9 @@ public class ReadableFileController {
     @ResponseBody
     public ReadableFile showDocumentObject(@PathVariable String path) {
         try {
-            return ReadableFileService.getDocumentByPath(path);
+            return readableFileService.getDocumentByPath(path);
         }   catch(IOException e) {
-            return new ReadableFile(path,null);
+            return new ReadableFile(path, null);
         }
     }
 

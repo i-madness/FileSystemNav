@@ -1,4 +1,4 @@
-package models;
+package io.github.imadness.fsnav.models;
 
 // for customization of the service
 public class Preferences {

@@ -1,7 +1,7 @@
 // linking folders in table
 $('body').on('click','.folderLink', function() {
     currentDir = $(this).children('.tdName').text();
-    $('#pathInput').val($('#pathInput').val()+currentDir+'/')
+    $('#pathInput').val($('#pathInput').val() + currentDir+'/')
     $('#idForm').submit();
 });
 
@@ -11,11 +11,7 @@ $('body').on('click','#parentBtn', function(e) {
     var dir = $('#pathInput').val();
     var par = $('#parentUp').text();
     if (dir.length > 3) {
-        /*var pos = dir.length - 2;
-         while (dir[pos] != '/')
-         pos--;
-         $('#pathInput').val(dir.substr(0, pos+1))*/
-        $('#pathInput').val(par[par.length-1]=='/' ? par : par + '/')
+        $('#pathInput').val(par[par.length-1] == '/' ? par : par + '/')
         $('#idForm').submit();
     }
 });
@@ -41,7 +37,7 @@ $('body').on('click','.fileLink', function() {
 
 $('#idForm').submit(function(e) {
     currentDir = $('#pathInput').val();
-    if (currentDir[currentDir.length-1]!='/')
+    if (currentDir[currentDir.length-1] != '/')
         $('#pathInput').text(currentDir = currentDir.concat('/'))
     $.get('/dir/' + currentDir.split("/").join("-_-").split(".").join('-__-'), function(directory) {
         if (directory!==undefined && directory.name.indexOf('(forbidden!)')==-1) {

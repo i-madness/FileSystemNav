@@ -1,4 +1,4 @@
-package models;
+package io.github.imadness.fsnav.models;
 
 import java.util.ArrayList;
 

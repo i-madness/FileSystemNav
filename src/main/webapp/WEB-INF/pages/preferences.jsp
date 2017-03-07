@@ -43,7 +43,7 @@
   <form id="prefForm">
     <div class="row prefs">
       <div class="col-md-4">Начальная папка</div>
-      <div class="col-md-4"><input data-toggle="tooltip" data-placement="right" title="Введите директорию в формате: Root:/Dir/SubDir" id="initial" pattern="((\S+\s*)+[/])+" value="${InitialDir}"></div>
+      <div class="col-md-4"><input data-toggle="tooltip" data-placement="right" title="Введите директорию в формате: Root:/Dir/SubDir" id="initial" value="${InitialDir}"></div>
     </div>
     <hr/>
     <div class="row prefs">

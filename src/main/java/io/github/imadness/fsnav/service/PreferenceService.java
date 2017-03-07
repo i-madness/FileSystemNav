@@ -1,6 +1,8 @@
-package service;
+package io.github.imadness.fsnav.service;
 
-import models.Preferences;
+import io.github.imadness.fsnav.models.Preferences;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -11,10 +13,19 @@ import java.io.FileOutputStream;
 /**
  * Stores current service preferences and provides access to it
  */
+@Service
 public class PreferenceService {
-
+    /**
+     * Server base directory
+     */
+    @Value("${catalina.base}")
+    public String baseDir;
+    /**
+     * Current Preferences instance
+     */
     private static Preferences currentPreferences;
-    static {
+
+    public PreferenceService() {
         try {
             currentPreferences = getPreferencesFromXML();
         } catch (FileNotFoundException e) {
@@ -22,7 +33,7 @@ public class PreferenceService {
         }
     }
 
-    public static Preferences getPreferences() {
+    public Preferences getPreferences() {
         return currentPreferences;
     }
 
@@ -31,7 +42,7 @@ public class PreferenceService {
      * @return models.Preferences object with current
      * @throws FileNotFoundException if file not exists
      */
-    public static Preferences getPreferencesFromXML() throws FileNotFoundException {
+    public Preferences getPreferencesFromXML() throws FileNotFoundException {
         FileInputStream fileInputStream = new FileInputStream("preferences.xml");
         //String path = new ReadableFile("preferences.xml").getAbsolutePath();
         XMLDecoder xmlDecoder = new XMLDecoder(fileInputStream);
@@ -45,7 +56,7 @@ public class PreferenceService {
      * @param prefs preferences object to be encoded
      * @throws FileNotFoundException if file not exists
      */
-    public static void setPreferences(Preferences prefs) throws FileNotFoundException {
+    public void setPreferences(Preferences prefs) throws FileNotFoundException {
         FileOutputStream fileOutputStream = new FileOutputStream("preferences.xml");
         XMLEncoder xmlEncoder = new XMLEncoder(fileOutputStream);
         xmlEncoder.writeObject(prefs);

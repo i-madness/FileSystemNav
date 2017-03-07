@@ -4,8 +4,8 @@
     <module name="ServerNav" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" value="" />
-    <option name="PACKAGE_NAME" value="controllers" />
-    <option name="MAIN_CLASS_NAME" value="controllers.AppTests" />
+    <option name="PACKAGE_NAME" value="io.github.imadness.fsnav.controllers" />
+    <option name="MAIN_CLASS_NAME" value="io.github.imadness.fsnav.controllers.AppTests" />
     <option name="METHOD_NAME" value="" />
     <option name="TEST_OBJECT" value="class" />
     <option name="VM_PARAMETERS" value="-ea" />

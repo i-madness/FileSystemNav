@@ -1,7 +1,7 @@
-package service;
+package io.github.imadness.fsnav.service;
 
-import models.Directory;
-import models.Preferences;
+import io.github.imadness.fsnav.models.Directory;
+import io.github.imadness.fsnav.models.Preferences;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;

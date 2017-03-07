@@ -1,9 +1,9 @@
-package models;
+package io.github.imadness.fsnav.models;
 
 import java.util.ArrayList;
 
 /**
- * Created by Валерий on 13.07.2015.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 13.07.2015.
  */
 public class ReadableFile {
     private String name;
