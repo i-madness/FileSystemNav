@@ -22,6 +22,9 @@ public class DirectoryController {
     @Autowired
     private PreferenceService preferenceService;
 
+    @Autowired
+    private  DirectoryService directoryService;
+
     /**
      * Shows initial directory (stored in current preferences) when user opens the main page of service
      *
@@ -44,7 +47,7 @@ public class DirectoryController {
     @ResponseBody
     public Directory showDir(@PathVariable String path) {
         Preferences preferences = preferenceService.getPreferences();
-        return DirectoryService.getDirectoryByPath(path, preferences);
+        return directoryService.getDirectoryByPath(path, preferences);
     }
 
 }

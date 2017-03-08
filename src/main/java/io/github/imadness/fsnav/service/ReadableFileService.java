@@ -1,17 +1,16 @@
 package io.github.imadness.fsnav.service;
 
 import io.github.imadness.fsnav.models.ReadableFile;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * A class that provides an access to non-binary file's content.
- * Extensions are written down in static block
  */
 @Service
 public class ReadableFileService {
@@ -32,27 +31,20 @@ public class ReadableFileService {
      * @throws IOException if file is not found
      */
     public ReadableFile getDocumentByPath(String path) throws IOException {
-        path = path.replace("-_-", "/");
-        path = path.replace("-__-", ".");
+        path = path.replaceAll("-_-", "/").replaceAll("-__-", ".");
         try {
             path = new String(path.getBytes("ISO8859-1"), "UTF-8"); // handling encoding issues
         } catch (UnsupportedEncodingException e) {
             return null;
         }
         File file = new File(path);
-
-        String[] fileNameParts = path.split("[.]");
-        if (openableExtensions.contains(fileNameParts[fileNameParts.length - 1])) {
-            BufferedReader reader = null;
+        if (openableExtensions.contains(FilenameUtils.getExtension(path))) {
             ArrayList<String> lines = new ArrayList<String>();
-            try {
-                reader = new BufferedReader(new FileReader(file));
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
-                while ((line = reader.readLine()) != null)
+                while ((line = reader.readLine()) != null) {
                     lines.add(line);
-            } finally {
-                if (reader != null)
-                    reader.close();
+                }
             }
             return new ReadableFile(file.getName(), lines);
         } else {
