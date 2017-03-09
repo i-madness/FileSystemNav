@@ -4,7 +4,7 @@ $('#prefForm').submit(function(e){
     e.preventDefault();
     $.ajax({
         type: 'POST',
-        url: '/savePrefs',
+        url: '/preferences/savePrefs',
         contentType: 'application/json',
         data: JSON.stringify({
             initialDirectory: $('#initial').val(),
@@ -22,7 +22,7 @@ $('#prefForm').submit(function(e){
 var backToDefaults = function() {
     $('#initial').val("C:/");
     $('#nesting').val("30");
-    $('#hidden').prop("checked",false);
-    $('#folders').prop("checked",false);
+    $('#hidden').prop("checked", false);
+    $('#folders').prop("checked", false);
     $('#prefForm').submit();
 }

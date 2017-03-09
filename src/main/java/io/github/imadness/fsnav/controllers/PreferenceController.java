@@ -1,14 +1,13 @@
 package io.github.imadness.fsnav.controllers;
 
 import io.github.imadness.fsnav.models.Preferences;
+import io.github.imadness.fsnav.service.PreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import io.github.imadness.fsnav.service.PreferenceService;
 
 import java.io.FileNotFoundException;
 
@@ -16,7 +15,7 @@ import java.io.FileNotFoundException;
  * Controller that handles preferences mapping
  */
 @Controller
-@EnableWebMvc
+@RequestMapping("/preferences")
 public class PreferenceController {
     @Autowired
     private PreferenceService preferenceService;
@@ -27,7 +26,7 @@ public class PreferenceController {
      * @param model ModelMap to add all data from preferences and to show it on the page
      * @return the name of preferences page
      */
-    @RequestMapping("/preferences")
+    @RequestMapping(method = RequestMethod.GET)
     public String showCustomizationPage(ModelMap model) {
         Preferences preferences = preferenceService.getPreferences();
         model.addAttribute("InitialDir", preferences.getInitialDirectory());
